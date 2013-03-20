@@ -1,0 +1,41 @@
+* cl-openstackclient 
+
+** Usage
+
+*** Access to keystone
+
+    At first, create keystone instance with authurl, tenantname, username and password.
+
+    (setf *keystone* (make-instance 'keystone
+                                    :auth-url "http://authhost:5000"
+                                    :tenantname "admin"
+                                    :username "admin"
+                                    :password "password"))
+
+
+    Second, get authrication with method "keystone-init-authorication".
+
+    (keystone-init-authorication *keystone*)
+
+
+
+** Dependencies
+
+   Simple OpenStack clients library.
+
+** Installation
+
+
+** Author
+
++ Tomoaki Nakajima (powered.by.solaris@gmail.com)
+
+* Copyright
+
+Copyright (c) 2013 Tomoaki Nakajima (powered.by.solaris@gmail.com)
+
+
+* License
+
+Licensed under the LLGPL License.
+
