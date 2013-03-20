@@ -28,11 +28,11 @@
 
 ** Author
 
-+ Tomoaki Nakajima (powered.by.solaris@gmail.com)
++ @irix_jp
 
 * Copyright
 
-Copyright (c) 2013 Tomoaki Nakajima (powered.by.solaris@gmail.com)
+Copyright (c) 2013 @irix_jp
 
 
 * License
