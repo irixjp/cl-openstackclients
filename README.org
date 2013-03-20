@@ -2,26 +2,30 @@
 
 ** Usage
 
-*** Access to keystone
+*** keystone
 
     At first, create keystone instance with authurl, tenantname, username and password.
 
-    (setf *keystone* (make-instance 'keystone
-                                    :auth-url "http://authhost:5000"
-                                    :tenantname "admin"
-                                    :username "admin"
-                                    :password "password"))
+        (setf *keystone* (make-instance 'keystone
+                                        :auth-url "http://authhost:5000"
+                                        :tenantname "admin"
+                                        :username "admin"
+                                        :password "password"))
 
 
     Second, get authrication with method "keystone-init-authorication".
 
-    (keystone-init-authorication *keystone*)
+        (keystone-init-authorication *keystone*)
 
 
 
 ** Dependencies
 
-   Simple OpenStack clients library.
+   cl-annot
+   drakma
+   cl-json
+   yason
+
 
 ** Installation
 
