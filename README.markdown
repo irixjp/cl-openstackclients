@@ -39,17 +39,17 @@ ex.)
     # cd /home/username/.system-lisp
     # git clone https://github.com/irixjp/cl-openstackclients.git
 
-If you are using Linux.
+### If you are using Linux.
 
     # ln -s cl-openstackclients/cl-openstackclient.asd .
     # ln -s cl-openstackclients/cl-openstackclient-test.asd .
 
-If you are usinf Windows
+### If you are usinf Windows
 
-    Create shortcut file of cl-openstackclients/cl-openstackclient.asd & cl-openstackclients/cl-openstackclient-test.asd in "/home/username/.system-lisp"
+Create shortcut file of cl-openstackclients/cl-openstackclient.asd & cl-openstackclients/cl-openstackclient-test.asd in "/home/username/.system-lisp"
 
 
-Load cl-openstackclient
+### Load cl-openstackclient
 
     # (ql:quickload :cl-openstackclient) 
 
@@ -58,7 +58,7 @@ or
     # (require :cl-openstackclient)
 
 
-When you want to test this library.
+### When you want to test this library.
 
     # (ql:quickload :cl-openstackclient-test)
 
