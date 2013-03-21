@@ -15,24 +15,26 @@
 
 @export
 (defclass keystone ()
-  ((api-version :initform 2   :initarg :api-version)
-   (auth-url    :initform nil :initarg :auth-url)
-   (tenantname  :initform nil :initarg :tenantname)
-   (username    :initform nil :initarg :username)
-   (password    :initform nil :initarg :password)
-   (token       :initform nil :initarg :token)
-   (tenantid    :initform nil :initarg :tenantid)
-   (endpoints   :initform nil)))
+  ((api-version :initform "v2.0" 
+                :initarg :api-version 
+                :accessor get-keystone-api-version)
+   (auth-url    :initform nil :initarg :auth-url   :accessor get-keystone-auth-url)
+   (tenantname  :initform nil :initarg :tenantname :accessor get-keystone-tenantname)
+   (username    :initform nil :initarg :username   :accessor get-keystone-username)
+   (password    :initform nil :initarg :password   :accessor get-keystone-password)
+   (token       :initform nil :initarg :token      :accessor get-keystone-token)
+   (tenantid    :initform nil :initarg :tenantid   :accessor get-keystone-tenantid)
+   (endpoints   :initform nil :initarg :endpoints  :accessor get-keystone-endpoints)))
 
 
 (defclass endpoint ()
-  ((region   :initform nil :initarg :region)
-   (name     :initform nil :initarg :name)
-   (type     :initform nil :initarg :type)
-   (id       :initform nil :initarg :id)
-   (admin    :initform nil :initarg :admin)
-   (public   :initform nil :initarg :public)
-   (internal :initform nil :initarg :internal)))
+  ((region   :initform nil :initarg :region   :accessor get-endpoint-region)
+   (name     :initform nil :initarg :name     :accessor get-endpoint-name)
+   (type     :initform nil :initarg :type     :accessor get-endpoint-type)
+   (id       :initform nil :initarg :id       :accessor get-endpoint-id)
+   (admin    :initform nil :initarg :admin    :accessor get-endpoint-admin)
+   (public   :initform nil :initarg :public   :accessor get-endpoint-public)
+   (internal :initform nil :initarg :internal :accessor get-endpoint-internal)))
 
 @export
 (defmethod k-init-authorication ((k keystone))
@@ -40,11 +42,52 @@
       (with-slots (auth-url api-version tenantname username password) k
         (keystone-request-auth auth-url api-version
                                (keystone-create-auth-json tenantname username password)))
-    (setf (slot-value k 'token)     (keystone-get-property-from-hash body "access" "token" "id"))
-    (setf (slot-value k 'tenantid)  (keystone-get-property-from-hash body "access" "token" "tenant" "id"))
-    (setf (slot-value k 'endpoints) (keystone-create-endpoints-instance-list body)))
+    (setf (get-keystone-token k)     (keystone-get-property-from-hash body "access" "token" "id"))
+    (setf (get-keystone-tenantid k)  (keystone-get-property-from-hash body "access" "token" "tenant" "id"))
+    (setf (get-keystone-endpoints k) (keystone-create-endpoints-instance-list body)))
   k)
 
+(defmethod k-get-specific-endpoint ((k keystone) servicename)
+  (loop for i in (get-keystone-endpoints k)
+     if (string= servicename (get-endpoint-name i)) return i))
+
+@export
+(defmethod k-get-tenants-list ((k keystone))
+  (multiple-value-bind (body-or-stream status-code headers 
+                                       uri stream must-close reason-phrase)
+      (drakma:http-request (concatenate 'string
+                                        (first (get-endpoint-public 
+                                                (k-get-specific-endpoint k "keystone")))
+                                        "/tenants")
+                           :method :get
+                           :additional-headers (list (cons "X-Auth-Token" (get-keystone-token k))))
+    body-or-stream))
+
+@export
+(defmethod k-get-users-list ((k keystone))
+  (multiple-value-bind (body-or-stream status-code headers 
+                                       uri stream must-close reason-phrase)
+      (drakma:http-request (concatenate 'string
+                                        (first (get-endpoint-public 
+                                                (k-get-specific-endpoint k "keystone")))
+                                        "/users")
+                           :method :get
+                           :additional-headers (list (cons "X-Auth-Token" (get-keystone-token k))))
+    body-or-stream))
+
+
+(defun keystone-get-api-version (url)
+  "Get supported api version from keystone => list which include version string."
+  (multiple-value-bind (body-or-stream status-code headers 
+                                       uri stream must-close reason-phrase)
+      (drakma:http-request url
+                           :content-type "application/json"
+                           :method       :get)
+    (unless (= status-code 300)
+      (return-from keystone-get-api-version nil))
+    (loop for i in 
+         (keystone-get-property-from-hash (yason:parse body-or-stream) "versions" "values")
+       collect (gethash "id" i))))
 
 
 (defun keystone-create-auth-json (tenantname username password)
@@ -56,10 +99,12 @@
 
 (defun keystone-request-auth (url version json)
   "send auth request to keystone => t/nil and messages"
+  (unless (member version (keystone-get-api-version url) :test #'string=)
+    (error "Invalid api version"))
   (cond
-    ((eql version 1) (setf url (concatenate 'string url "/v1.0/tokens")))
-    ((eql version 2) (setf url (concatenate 'string url "/v2.0/tokens")))
-    ((eql version 3) (setf url (concatenate 'string url "/v3.0/tokens")))
+    ((string= version "v1.0") (setf url (concatenate 'string url "/v1.0/tokens")))
+    ((string= version "v2.0") (setf url (concatenate 'string url "/v2.0/tokens")))
+    ((stirng= version "v3.0") (setf url (concatenate 'string url "/v3.0/tokens")))
     (t (error "Invalid Auth Version.")))
   (multiple-value-bind (body-or-stream status-code headers 
                                        uri stream must-close reason-phrase)
@@ -97,11 +142,16 @@
     (make-instance 'endpoint
                    :name     servicename
                    :type     (gethash "type" endpointinfo)
-                   :id       (gethash "id"          (first (gethash "endpoints" endpointinfo)))
-                   :region   (gethash "region"      (first (gethash "endpoints" endpointinfo)))
-                   :admin    (gethash "adminURL"    (first (gethash "endpoints" endpointinfo)))
-                   :public   (gethash "publicURL"   (first (gethash "endpoints" endpointinfo)))
-                   :internal (gethash "internalURL" (first (gethash "endpoints" endpointinfo))))))
+                   :id       (keystone-collect-region-endpoint endpointinfo "id")
+                   :region   (keystone-collect-region-endpoint endpointinfo "region")
+                   :admin    (keystone-collect-region-endpoint endpointinfo "adminURL")
+                   :public   (keystone-collect-region-endpoint endpointinfo "publicURL")
+                   :internal (keystone-collect-region-endpoint endpointinfo "internalURL"))))
+
+(defun keystone-collect-region-endpoint (hash property)
+  (loop for i in (gethash "endpoints" hash)
+     collect
+       (gethash property i)))
 
 (defun keystone-create-endpoints-instance-list (k-res)
   (loop for i in (keystone-check-endpoint k-res)
