@@ -4,11 +4,11 @@
 |#
 
 (in-package :cl-user)
-(defpackage cl-openstackclient-test
+(defpackage cl-openstackclients-test
   (:use :cl
-        :cl-openstackclient
+        :cl-openstackclients
         :cl-test-more))
-(in-package :cl-openstackclient-test)
+(in-package :cl-openstackclients-test)
 
 (plan nil)
 
@@ -18,7 +18,7 @@
 (defparameter *password* "openstack")
 
 (diag "keystone-create-auth-json")
-(is (cl-openstackclient::keystone-create-auth-json *tenant* *username* *password*) 
+(is (cl-openstackclients::keystone-create-auth-json *tenant* *username* *password*) 
     "{\"auth\":{\"tenantName\":\"admin\",\"passwordCredentials\":{\"username\":\"admin\",\"password\":\"openstack2013\"}}}")
 
 

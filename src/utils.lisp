@@ -3,15 +3,50 @@
   Copyright (c) 2013 Tomoaki Nakajima (powered.by.solaris@gmail.com)
 |#
 
-(in-package :cl-user)
-(defpackage cl-openstackclient
-  (:use :cl))
-(in-package :cl-openstackclient)
+(in-package :cl-openstackclients)
 
 (annot:enable-annot-syntax)
 
 (setf drakma:*drakma-default-external-format* :utf-8)
 (pushnew (cons "application" "json") drakma:*text-content-types* :test #'equal)
 
+(defun alist->json (alist)
+  (json:encode-json-to-string alist))
+
+(defun json->hash (json)
+  (yason:parse json))
+
+(defun http-post-request (url content-json)
+  (multiple-value-bind (body-or-stream
+                        status-code
+                        headers
+                        uri
+                        stream
+                        must-close
+                        reason-phrase)
+      (drakma:http-request url
+                           :content-type "application/json"
+                           :method       :post
+                           :content      content-json)
+    status-code body-or-stream))
+
+(defun http-get-request (url headers-alist)
+  (multiple-value-bind (body-or-stream
+                        status-code
+                        headers
+                        uri
+                        stream
+                        must-close
+                        reason-phrase)
+      (drakma:http-request url
+                           :method :get
+                           :additional-headers headers-alist)
+    status-code body-or-stream))
 
 
+(defun get-property-from-hash (hash &rest values)
+  "get specified properties from hash"
+  (let ((x k-res))
+    (dolist (y values)
+      (setf x (gethash y x)))
+    x))

@@ -3,10 +3,7 @@
   Copyright (c) 2013 Tomoaki Nakajima (powered.by.solaris@gmail.com)
 |#
 
-(in-package :cl-user)
-(defpackage cl-openstackclient
-  (:use :cl))
-(in-package :cl-openstackclient)
+(in-package :cl-openstackclients)
 
 (annot:enable-annot-syntax)
 
