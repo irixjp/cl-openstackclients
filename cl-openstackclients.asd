@@ -26,6 +26,7 @@
                 :components
                 ((:file "cl-openstackclients")
                  (:file "utils")
+                 (:file "conf")
                  (:file "keystone")
                  (:file "nova"))))
   :description ""
