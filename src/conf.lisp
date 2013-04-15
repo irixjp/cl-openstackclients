@@ -10,4 +10,4 @@
 (defun conf-file-exist-p ()
   )
 
-(defun load-conf-file 
+;(defun load-conf-file 

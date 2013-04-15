@@ -28,7 +28,7 @@
                            :content-type "application/json"
                            :method       :post
                            :content      content-json)
-    status-code body-or-stream))
+    (values status-code body-or-stream)))
 
 (defun http-get-request (url headers-alist)
   (multiple-value-bind (body-or-stream
@@ -41,12 +41,12 @@
       (drakma:http-request url
                            :method :get
                            :additional-headers headers-alist)
-    status-code body-or-stream))
+    (values status-code body-or-stream)))
 
 
 (defun get-property-from-hash (hash &rest values)
   "get specified properties from hash"
-  (let ((x k-res))
+  (let ((x hash))
     (dolist (y values)
       (setf x (gethash y x)))
     x))
