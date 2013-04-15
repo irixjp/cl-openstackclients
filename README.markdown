@@ -10,7 +10,7 @@ I tested on Clozure CL 1.9 & Windows7(64bit).
 
 At first, create keystone instance.
 
-    (setf *keystone* (make-instance 'keystone
+    (setf *keystone* (make-instance 'keystone-v2
                                     :auth-url "http://keystonehost:5000"
                                     :tenantname "tenantname"
                                     :username   "username"
@@ -18,10 +18,20 @@ At first, create keystone instance.
 
 Second, request auth info to keystone. This method set token & endpoint data to keystone instance from keystone responses.
 
-    (k-init-authorication *keystone*)
+    (keystone-initialize *keystone*)
 
+If you want the token from keystone instance,
 
+    (get-k2-token *keystone*)
+       => bSJ9LCB7ImVuZHBvaW50cyI6IFt7Im ....
 
+If you want specific endpoint url,
+
+    (keystone-get-endpoint *key* "compute")
+       => "http://127.0.0.1:8774/v2/6638856879454e00a548871a01463850"
+
+    (keystone-get-endpoint *key* "image" :urltype "adminURL")
+       => "http://127.0.0.1:9292"
 
 
 

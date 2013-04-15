@@ -49,9 +49,9 @@
   (loop for i in (get-property-from-hash hashed-k-res "access" "serviceCatalog")
      collect (get-property-from-hash i "type")))
 
-(defun ks-v2-get-endpoint-from-hash (hashed-k-res servicename)
+(defun ks-v2-get-endpoint-from-hash (endpoints-list servicename)
   "get specified endpoint date from hashed keystone response. => a endpoint hashtable"
-  (dolist (endpoint (get-property-from-hash hashed-k-res "access" "serviceCatalog"))
+  (dolist (endpoint endpoints-list)
     (when (string= (get-property-from-hash endpoint "type") servicename)
       (return-from ks-v2-get-endpoint-from-hash endpoint))))
 
@@ -69,8 +69,10 @@
    (tenantid    :initform nil :initarg :tenantid   :accessor get-k2-tenantid)
    (endpoints   :initform nil :initarg :endpoints  :accessor get-k2-endpoints)))
 
-
 @export
+(defgeneric keystone-initialize (keystone)
+  (:documentation "initialize keystone instance"))
+
 (defmethod keystone-initialize ((k keystone-v2))
   (let ((hash
          (with-slots (auth-url api-version tenantname username password) k
@@ -87,6 +89,19 @@
           (get-property-from-hash hash "access" "serviceCatalog"))
     k))
 
+@export
+(defgeneric keystone-get-endpoint (keystone servicetype &key urltype region)
+  (:documentation "get endpoint url"))
+
+(defmethod keystone-get-endpoint ((k keystone-v2) servicename &key
+                                                                (urltype "publicURL")
+                                                                (region "RegionOne"))
+  (let ((endpoint (ks-v2-get-endpoint-from-hash (get-k2-endpoints k) servicename)))
+    (if endpoint
+        (loop for i in (get-property-from-hash endpoint "endpoints")
+           if (string= region (get-property-from-hash i "region"))
+           do (return (get-property-from-hash i urltype)))
+        nil)))
 
 ;(defmethod k-get-specific-endpoint ((k keystone) servicename)
 ;  (loop for i in (get-keystone-endpoints k)
