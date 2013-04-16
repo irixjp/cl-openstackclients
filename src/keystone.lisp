@@ -44,9 +44,9 @@
     ((string= version "v3.0") nil)
     (t (error "Invalid Auth Version."))))
 
-(defun ks-v2-collect-endpoints-type (hashed-k-res)
+(defun ks-v2-collect-endpoints-type (endpoints-list)
   "collect endpoint type => list of endpoint type"
-  (loop for i in (get-property-from-hash hashed-k-res "access" "serviceCatalog")
+  (loop for i in endpoints-list
      collect (get-property-from-hash i "type")))
 
 (defun ks-v2-get-endpoint-from-hash (endpoints-list servicename)
@@ -54,6 +54,11 @@
   (dolist (endpoint endpoints-list)
     (when (string= (get-property-from-hash endpoint "type") servicename)
       (return-from ks-v2-get-endpoint-from-hash endpoint))))
+
+(defun ks-v2-print-endpoint-info (hashed-endpoint)
+  (format t "~a" (get-property-from-hash hashed-endpoint "type"))
+  (format t "~10t~a" (get-property-from-hash hashed-endpoint "name"))
+  )
 
 
 @export
@@ -102,6 +107,26 @@
            if (string= region (get-property-from-hash i "region"))
            do (return (get-property-from-hash i urltype)))
         nil)))
+
+
+@export
+(defgeneric keystone-print-endpoints (keystone &optional servicename)
+  (:documentation "print all or specific endpoints"))
+
+(defmethod keystone-print-endpoints ((k keystone-v2) &optional (servicename nil))
+  (if servicename
+      (progn
+        (let ((endpoint (ks-v2-get-endpoint-from-hash (get-k2-endpoints k) servicename)))
+          (if endpoint
+              (loop for i in (get-property-from-hash endpoint "endpoints")
+                 if (string= region (get-property-from-hash i "region"))
+                 do (return (get-property-from-hash i urltype)))
+              nil)))
+      (progn
+        (loop for i in (ks-v2-collect-endpoints-type (get-k2-endpoints k))
+           do (progn
+                )))))
+          
 
 ;(defmethod k-get-specific-endpoint ((k keystone) servicename)
 ;  (loop for i in (get-keystone-endpoints k)
