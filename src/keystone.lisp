@@ -10,6 +10,7 @@
 (setf drakma:*drakma-default-external-format* :utf-8)
 (pushnew (cons "application" "json") drakma:*text-content-types* :test #'equal)
 
+<<<<<<< HEAD
 @export
 (defclass keystone-v2 ()
   ((api-version  :initform "v2.0" :initarg :api-version  :accessor get-api-version)
@@ -26,6 +27,58 @@
 @export
 (defgeneric initialize_auth_object (keystone)
   (:documentation ""))
+=======
+(defun ks-get-api-version (url)
+  "Get supported api version from keystone => list which include version string."
+  (multiple-value-bind (status main)
+      (http-get-request url nil)
+    (unless (= status 300)
+      (return-from ks-get-api-version nil))
+    (loop for i in (get-property-from-hash (json->hash main) "versions" "values")
+         collect (get-property-from-hash i "id"))))
+
+(defun ks-create-auth-json (tenantname username password)
+  "Create JSON strig for keystone auth. => json string"
+  (alist->json
+   `(("auth" ("tenantName" . ,tenantname)
+             ("passwordCredentials" ("username" . ,username)
+                                    ("password" . ,password))))))
+
+(defun ks-v2-request-auth (url auth-json)
+  (multiple-value-bind (status main)
+      (http-post-request (concatenate 'string url "/v2.0/tokens") auth-json)
+    (unless (= status 200)
+      (format t "~a~%" main)
+      (error "Not Authorized"))
+    (json->hash main)))
+
+(defun ks-request-auth (url version auth-json)
+  "send auth request to keystone => t/nil and messages"
+  (unless (member version (ks-get-api-version url) :test #'string=)
+    (error "You can't use API which you specified api version"))
+  (cond
+    ((string= version "v1.0") nil)
+    ((string= version "v2.0") (ks-v2-request-auth url auth-json))
+    ((string= version "v3.0") nil)
+    (t (error "Invalid Auth Version."))))
+
+(defun ks-v2-collect-endpoints-type (endpoints-list)
+  "collect endpoint type => list of endpoint type"
+  (loop for i in endpoints-list
+     collect (get-property-from-hash i "type")))
+
+(defun ks-v2-get-endpoint-from-hash (endpoints-list servicename)
+  "get specified endpoint date from hashed keystone response. => a endpoint hashtable"
+  (dolist (endpoint endpoints-list)
+    (when (string= (get-property-from-hash endpoint "type") servicename)
+      (return-from ks-v2-get-endpoint-from-hash endpoint))))
+
+(defun ks-v2-print-endpoint-info (hashed-endpoint)
+  (format t "~a" (get-property-from-hash hashed-endpoint "type"))
+  (format t "~10t~a" (get-property-from-hash hashed-endpoint "name"))
+  )
+
+>>>>>>> 10b3961620a6c9dacecd4ca11d4e88a46093b35d
 
 @export
 (defgeneric ks_retrieve_regions (keystone)
@@ -165,6 +218,26 @@
 ;           if (string= region (get-property-from-hash i "region"))
 ;           do (return (get-property-from-hash i urltype)))
 ;        nil)))
+
+
+@export
+(defgeneric keystone-print-endpoints (keystone &optional servicename)
+  (:documentation "print all or specific endpoints"))
+
+(defmethod keystone-print-endpoints ((k keystone-v2) &optional (servicename nil))
+  (if servicename
+      (progn
+        (let ((endpoint (ks-v2-get-endpoint-from-hash (get-k2-endpoints k) servicename)))
+          (if endpoint
+              (loop for i in (get-property-from-hash endpoint "endpoints")
+                 if (string= region (get-property-from-hash i "region"))
+                 do (return (get-property-from-hash i urltype)))
+              nil)))
+      (progn
+        (loop for i in (ks-v2-collect-endpoints-type (get-k2-endpoints k))
+           do (progn
+                )))))
+          
 
 ;(defmethod k-get-specific-endpoint ((k keystone) servicename)
 ;  (loop for i in (get-keystone-endpoints k)
