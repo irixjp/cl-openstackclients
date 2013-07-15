@@ -1,0 +1,32 @@
+
+
+* keystone
+
+** class
+*** keystone_v2
+*** keystone_v3
+
+** generic
+*** initialize_auth_object
+*** ks_retrieve_regions
+*** ks_retrieve_endpoints
+*** ks_retrieve_token_id
+*** ks_retrieve_token_expire
+*** ks_retrieve_tenantname
+*** ks_retrieve_rolename
+*** ks_retrieve_username
+
+*** ks_adminp
+*** ks_list_users
+*** ks_list_tenants
+*** ks_list_roles
+
+* nova
+
+** class
+*** nova_v1.1
+*** nova_v2
+
+** generic
+*** initialize_nova_object
+

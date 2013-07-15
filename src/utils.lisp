@@ -11,9 +11,11 @@
 (pushnew (cons "application" "json") drakma:*text-content-types* :test #'equal)
 
 (defun alist->json (alist)
+  "convert alist to json string"
   (json:encode-json-to-string alist))
 
 (defun json->hash (json)
+  "convert json string to hashed json"
   (yason:parse json))
 
 (defun http-post-request (url content-json)

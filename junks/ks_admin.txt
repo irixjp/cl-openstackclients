@@ -1,0 +1,118 @@
+{
+    "access": {
+        "metadata": {
+            "is_admin": 0,
+            "roles": [
+                "401b473a79d54cfa872fb9e6cf7678f6"
+            ]
+        },
+        "serviceCatalog": [
+            {
+                "endpoints": [
+                    {
+                        "adminURL": "http://192.168.128.100:8774/v2/cda423db41674eb9b418669f0412f25e",
+                        "id": "16d3bc5d419d42d28f789d313271d12a",
+                        "internalURL": "http://192.168.128.100:8774/v2/cda423db41674eb9b418669f0412f25e",
+                        "publicURL": "http://192.168.128.100:8774/v2/cda423db41674eb9b418669f0412f25e",
+                        "region": "RegionOne"
+                    }
+                ],
+                "endpoints_links": [],
+                "name": "nova",
+                "type": "compute"
+            },
+            {
+                "endpoints": [
+                    {
+                        "adminURL": "http://192.168.128.100:9696/",
+                        "id": "755a61b5c1b74bc99c59f9f30620eb98",
+                        "internalURL": "http://192.168.128.100:9696/",
+                        "publicURL": "http://192.168.128.100:9696/",
+                        "region": "RegionOne"
+                    }
+                ],
+                "endpoints_links": [],
+                "name": "quantum",
+                "type": "network"
+            },
+            {
+                "endpoints": [
+                    {
+                        "adminURL": "http://192.168.128.100:9292",
+                        "id": "0061613a02c94b83909a0c7a688f6b62",
+                        "internalURL": "http://192.168.128.100:9292",
+                        "publicURL": "http://192.168.128.100:9292",
+                        "region": "RegionOne"
+                    }
+                ],
+                "endpoints_links": [],
+                "name": "glance",
+                "type": "image"
+            },
+            {
+                "endpoints": [
+                    {
+                        "adminURL": "http://192.168.128.100:8776/v1/cda423db41674eb9b418669f0412f25e",
+                        "id": "1f92b5fbe8534581b80adb95f6aeb31a",
+                        "internalURL": "http://192.168.128.100:8776/v1/cda423db41674eb9b418669f0412f25e",
+                        "publicURL": "http://192.168.128.100:8776/v1/cda423db41674eb9b418669f0412f25e",
+                        "region": "RegionOne"
+                    }
+                ],
+                "endpoints_links": [],
+                "name": "cinder",
+                "type": "volume"
+            },
+            {
+                "endpoints": [
+                    {
+                        "adminURL": "http://192.168.128.100:8773/services/Admin",
+                        "id": "6fd9155062764179887ceb54fe1be11c",
+                        "internalURL": "http://192.168.128.100:8773/services/Cloud",
+                        "publicURL": "http://192.168.128.100:8773/services/Cloud",
+                        "region": "RegionOne"
+                    }
+                ],
+                "endpoints_links": [],
+                "name": "ec2",
+                "type": "ec2"
+            },
+            {
+                "endpoints": [
+                    {
+                        "adminURL": "http://192.168.128.100:35357/v2.0",
+                        "id": "06da8c1780874f66927d8528d9bcce59",
+                        "internalURL": "http://192.168.128.100:5000/v2.0",
+                        "publicURL": "http://192.168.128.100:5000/v2.0",
+                        "region": "RegionOne"
+                    }
+                ],
+                "endpoints_links": [],
+                "name": "keystone",
+                "type": "identity"
+            }
+        ],
+        "token": {
+            "expires": "2013-07-15T17:06:30Z",
+            "id": "MIIKmgYJKoZIhvcNAQcCoIIKizCCCocCAQExCTAHBgUrDgMCGjCCCXMGCSqGSIb3DQEHAaCCCWQEgglgeyJhY2Nlc3MiOiB7InRva2VuIjogeyJpc3N1ZWRfYXQiOiAiMjAxMy0wNy0xNFQxNzowNjozMS4wMzIzODEiLCAiZXhwaXJlcyI6ICIyMDEzLTA3LTE1VDE3OjA2OjMwWiIsICJpZCI6ICJwbGFjZWhvbGRlciIsICJ0ZW5hbnQiOiB7ImRlc2NyaXB0aW9uIjogbnVsbCwgImVuYWJsZWQiOiB0cnVlLCAiaWQiOiAiY2RhNDIzZGI0MTY3NGViOWI0MTg2NjlmMDQxMmYyNWUiLCAibmFtZSI6ICJhZG1pbiJ9fSwgInNlcnZpY2VDYXRhbG9nIjogW3siZW5kcG9pbnRzIjogW3siYWRtaW5VUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo4Nzc0L3YyL2NkYTQyM2RiNDE2NzRlYjliNDE4NjY5ZjA0MTJmMjVlIiwgInJlZ2lvbiI6ICJSZWdpb25PbmUiLCAiaW50ZXJuYWxVUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo4Nzc0L3YyL2NkYTQyM2RiNDE2NzRlYjliNDE4NjY5ZjA0MTJmMjVlIiwgImlkIjogIjE2ZDNiYzVkNDE5ZDQyZDI4Zjc4OWQzMTMyNzFkMTJhIiwgInB1YmxpY1VSTCI6ICJodHRwOi8vMTkyLjE2OC4xMjguMTAwOjg3NzQvdjIvY2RhNDIzZGI0MTY3NGViOWI0MTg2NjlmMDQxMmYyNWUifV0sICJlbmRwb2ludHNfbGlua3MiOiBbXSwgInR5cGUiOiAiY29tcHV0ZSIsICJuYW1lIjogIm5vdmEifSwgeyJlbmRwb2ludHMiOiBbeyJhZG1pblVSTCI6ICJodHRwOi8vMTkyLjE2OC4xMjguMTAwOjk2OTYvIiwgInJlZ2lvbiI6ICJSZWdpb25PbmUiLCAiaW50ZXJuYWxVUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo5Njk2LyIsICJpZCI6ICI3NTVhNjFiNWMxYjc0YmM5OWM1OWY5ZjMwNjIwZWI5OCIsICJwdWJsaWNVUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo5Njk2LyJ9XSwgImVuZHBvaW50c19saW5rcyI6IFtdLCAidHlwZSI6ICJuZXR3b3JrIiwgIm5hbWUiOiAicXVhbnR1bSJ9LCB7ImVuZHBvaW50cyI6IFt7ImFkbWluVVJMIjogImh0dHA6Ly8xOTIuMTY4LjEyOC4xMDA6OTI5MiIsICJyZWdpb24iOiAiUmVnaW9uT25lIiwgImludGVybmFsVVJMIjogImh0dHA6Ly8xOTIuMTY4LjEyOC4xMDA6OTI5MiIsICJpZCI6ICIwMDYxNjEzYTAyYzk0YjgzOTA5YTBjN2E2ODhmNmI2MiIsICJwdWJsaWNVUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo5MjkyIn1dLCAiZW5kcG9pbnRzX2xpbmtzIjogW10sICJ0eXBlIjogImltYWdlIiwgIm5hbWUiOiAiZ2xhbmNlIn0sIHsiZW5kcG9pbnRzIjogW3siYWRtaW5VUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo4Nzc2L3YxL2NkYTQyM2RiNDE2NzRlYjliNDE4NjY5ZjA0MTJmMjVlIiwgInJlZ2lvbiI6ICJSZWdpb25PbmUiLCAiaW50ZXJuYWxVUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo4Nzc2L3YxL2NkYTQyM2RiNDE2NzRlYjliNDE4NjY5ZjA0MTJmMjVlIiwgImlkIjogIjFmOTJiNWZiZTg1MzQ1ODFiODBhZGI5NWY2YWViMzFhIiwgInB1YmxpY1VSTCI6ICJodHRwOi8vMTkyLjE2OC4xMjguMTAwOjg3NzYvdjEvY2RhNDIzZGI0MTY3NGViOWI0MTg2NjlmMDQxMmYyNWUifV0sICJlbmRwb2ludHNfbGlua3MiOiBbXSwgInR5cGUiOiAidm9sdW1lIiwgIm5hbWUiOiAiY2luZGVyIn0sIHsiZW5kcG9pbnRzIjogW3siYWRtaW5VUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo4NzczL3NlcnZpY2VzL0FkbWluIiwgInJlZ2lvbiI6ICJSZWdpb25PbmUiLCAiaW50ZXJuYWxVUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo4NzczL3NlcnZpY2VzL0Nsb3VkIiwgImlkIjogIjZmZDkxNTUwNjI3NjQxNzk4ODdjZWI1NGZlMWJlMTFjIiwgInB1YmxpY1VSTCI6ICJodHRwOi8vMTkyLjE2OC4xMjguMTAwOjg3NzMvc2VydmljZXMvQ2xvdWQifV0sICJlbmRwb2ludHNfbGlua3MiOiBbXSwgInR5cGUiOiAiZWMyIiwgIm5hbWUiOiAiZWMyIn0sIHsiZW5kcG9pbnRzIjogW3siYWRtaW5VUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDozNTM1Ny92Mi4wIiwgInJlZ2lvbiI6ICJSZWdpb25PbmUiLCAiaW50ZXJuYWxVUkwiOiAiaHR0cDovLzE5Mi4xNjguMTI4LjEwMDo1MDAwL3YyLjAiLCAiaWQiOiAiMDZkYThjMTc4MDg3NGY2NjkyN2Q4NTI4ZDliY2NlNTkiLCAicHVibGljVVJMIjogImh0dHA6Ly8xOTIuMTY4LjEyOC4xMDA6NTAwMC92Mi4wIn1dLCAiZW5kcG9pbnRzX2xpbmtzIjogW10sICJ0eXBlIjogImlkZW50aXR5IiwgIm5hbWUiOiAia2V5c3RvbmUifV0sICJ1c2VyIjogeyJ1c2VybmFtZSI6ICJhZG1pbiIsICJyb2xlc19saW5rcyI6IFtdLCAiaWQiOiAiYTY0NWM3YmYzYTZlNDZlYjkwOWUyOTA4MGYyMjBiZmUiLCAicm9sZXMiOiBbeyJuYW1lIjogImFkbWluIn1dLCAibmFtZSI6ICJhZG1pbiJ9LCAibWV0YWRhdGEiOiB7ImlzX2FkbWluIjogMCwgInJvbGVzIjogWyI0MDFiNDczYTc5ZDU0Y2ZhODcyZmI5ZTZjZjc2NzhmNiJdfX19MYH-MIH8AgEBMFwwVzELMAkGA1UEBhMCVVMxDjAMBgNVBAgTBVVuc2V0MQ4wDAYDVQQHEwVVbnNldDEOMAwGA1UEChMFVW5zZXQxGDAWBgNVBAMTD3d3dy5leGFtcGxlLmNvbQIBATAHBgUrDgMCGjANBgkqhkiG9w0BAQEFAASBgEOj7aZfKT6pLRC-X0UXk2A-UfWpTgyYY5um2SC5Fy4hkmKX+6jAow+ZVk--L4nqYnybXTXt-z8MrzJzl3wxwWw1i7Eqb7wDfMJIPptXeA8OVqDzJq6IAA61PclwGWqd3s9D7AkM3KU-XGzpItoP-hZySBWOS6jZpuYvH46fPNoa",
+            "issued_at": "2013-07-14T17:06:31.032381",
+            "tenant": {
+                "description": null,
+                "enabled": true,
+                "id": "cda423db41674eb9b418669f0412f25e",
+                "name": "admin"
+            }
+        },
+        "user": {
+            "id": "a645c7bf3a6e46eb909e29080f220bfe",
+            "name": "admin",
+            "roles": [
+                {
+                    "name": "admin"
+                }
+            ],
+            "roles_links": [],
+            "username": "admin"
+        }
+    }
+}

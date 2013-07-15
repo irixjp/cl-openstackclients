@@ -22,12 +22,14 @@
                :cl-json
                :yason
                :local-time)
+  :serial t
   :components ((:module "src"
                 :components
                 ((:file "cl-openstackclients")
                  (:file "utils")
                  (:file "conf")
                  (:file "keystone")
+                 (:file "keystone-v2")
                  (:file "nova"))))
   :description ""
   :long-description
